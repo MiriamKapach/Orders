@@ -2,7 +2,7 @@
 import { firestore } from '../../firebaseConfig';
 
 const ordersCollection = firestore.collection('orders');
-
+console.log("try")
 // Create a new order
 export default async function handler(req, res) {
   if (req.method === 'POST') {
