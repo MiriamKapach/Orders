@@ -1,7 +1,7 @@
-import { initializeApp } from "firebase/app";
+// import { initializeApp } from "firebase/app";
 // import { getApps } from "firebase/app";
-// import { getFirestore } from "firebase/firestore";
 import { getDatabase, ref, set } from 'firebase/database'
+import firebase from "firebase/compat/app";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBI8uNmgtfKks8JR7EQznSiTIg2HBEPYXI",
@@ -12,16 +12,13 @@ const firebaseConfig = {
   appId: "1:722773717214:web:0faa7d1a39192b3367d24f",
   measurementId: "G-3N85XGDSCM"
 };
-const app = initializeApp(firebaseConfig);
-// const firestore = getFirestore();
-function writeUserData(userId:any, email:any, password:any) {
-  const db = getDatabase();
-  const reference = ref(db, 'users/' + userId)
+firebase.initializeApp(firebaseConfig);
 
-  set(reference, {
-    userId: userId,
-    email: email,
-    password: password
-  });
+function writeUserData(userId:any, email:any, password:any) {
+  // const userRef = firebase.firestore().collection("users").add()
+  firebase.firestore().collection("users").doc(userId).set(({
+    email,
+    password,
+  }))
 }
 writeUserData("3","k.m15@gmail.com","1546")

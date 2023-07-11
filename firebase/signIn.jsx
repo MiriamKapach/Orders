@@ -25,7 +25,7 @@ function Page() {
     return (<div className="wrapper">
         <div className="form-wrapper">
             <h1 className="mt-60 mb-30">Sign In</h1>
-            <form onSubmit={handelSignIn} className="form">
+            <form onSubmit={handleForm} className="form">
                 <label htmlFor="email">
                     <p>Email</p>
                     <input onChange={(e) => setEmail(e.target.value)} required type="email" name="email" id="email" placeholder="example@mail.com" />
