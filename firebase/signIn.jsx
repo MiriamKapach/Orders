@@ -8,14 +8,17 @@ function Page() {
     const [password, setPassword] = useState('')
     const router = useRouter('')
     const handleForm = async (event) => {
-        // event.preventDefault()
-        // const { result, error } = await (email, password);
-        // if (error) {
-        //     return console.log(error)
-        // }
-        // console.log('Sign-in successful');//..
-        // console.log(result)
-        //  return router.push("listOrders")
+        event.preventDefault()
+        const { result, error } = await (email, password);
+        if (error) {
+            return console.log(error)
+        }
+        console.log(result)
+        if (!email, !password) {
+            alert("sign up")
+        } else {
+            return router.push("listOrders")
+        }
     }
     async function handelSignIn() {
         let user = { email, password }
@@ -34,7 +37,7 @@ function Page() {
                     <p>Password</p>
                     <input onChange={(e) => setPassword(e.target.value)} required type="password" name="password" id="password" placeholder="password" />
                 </label>
-                <button type="submit" onClick={handelSignIn()}>Sign In</button>
+                <button type="submit">Sign In</button>
             </form>
         </div>
 
@@ -43,3 +46,4 @@ function Page() {
 }
 
 export default Page;
+// onClick={handelSignIn()}

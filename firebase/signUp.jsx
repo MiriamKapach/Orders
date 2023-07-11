@@ -10,8 +10,8 @@ function Page() {
         event.preventDefault()
         const { result, error } = await (email, password);
         if (error) {
-            return akert("somthing is bad")
-            console.log(error)
+           // return alert("somthing is bad")
+            return console.log(error)
         }
         alert("sign up sucsses");
         console.log(result)
@@ -36,4 +36,3 @@ function Page() {
     );
 }
 export default Page;
-
