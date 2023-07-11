@@ -23,10 +23,7 @@
       "@/*": ["./*"]
     }
   },
-<<<<<<< HEAD
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-=======
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "pages/index.js", "firebase/signIn.jsx"],
->>>>>>> dev
   "exclude": ["node_modules"]
 }
