@@ -17,7 +17,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-export default function enrollment() {
+export default function Enrollment() {
 
     const [showSignIn, setShowSignIn] = useState(false)
     const [showSignUp, setshowSignUp] = useState(false)
