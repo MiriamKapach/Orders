@@ -1,21 +1,34 @@
 'use client'
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation'
+import check from './checkUser'
+import writeUserData from '../pages/index'
 
 function Page() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const router = useRouter()
+    const [users, setUsers] = useState([]);
     const handleForm = async (event) => {
+        let userId=0;
         event.preventDefault()
         const { result, error } = await (email, password);
-        if (error) {
-           // return alert("somthing is bad")
-            return console.log(error)
+        // if (error) {
+        //     return console.log(error)
+        // }
+        const user = { email, password };
+        if (check(user)) {
+            alert("exist! please sign in")
+            window.location.reload();
+        } else {
+            alert("sucsses")
+            setUsers([...users,user]);
+            alert(JSON.stringify(users))
+            userId=userId+1;
+           // await writeUserData(userId,email,password);
+            return router.push("listOrders");
         }
-        alert("sign up sucsses");
-        console.log(result)
-        return router.push("listOrders")
+        
     }
     return (<div className="wrapper">
         <div className="form-wrapper">

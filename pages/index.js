@@ -1,9 +1,10 @@
-// import firebase from 'firebase/firestore'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import SignInComponnent from "../firebase/signIn";
 import SignUpComponnent from '../firebase/signUp'
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc } from 'firebase/firestore/lite';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyBI8uNmgtfKks8JR7EQznSiTIg2HBEPYXI",
@@ -17,10 +18,33 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-export default function Enrollment() {
 
+// async function writeUserData(userId, email, password) {
+//     const docRef = await addDoc(collection(db, "users"), {
+//         email,
+//         password
+//     });
+//     alert("scsess writeUserData");
+// }
+
+export default function Enrollment() {
+    
     const [showSignIn, setShowSignIn] = useState(false)
     const [showSignUp, setshowSignUp] = useState(false)
+
+    // const writeUserData = async (userId, email, password) => {
+    //         await firebase.firestore().collection('users').doc(userId).set({
+    //         // await db.collection('users').doc(userId).set({
+    //             email,
+    //             password
+    //         });
+    //         alert("scsess writeUserData");
+    // };
+
+    // if(ShowSignIn.isAuthenticated()){
+    //     alert("Authenticated")
+    // }
+
     // firebase.firestore().collection("users")
     //     .doc(Fire.shared.userId)
     //     .update({ Ticket: firebase.firestore.FieldValue.arrayUnion(userId) })
@@ -28,17 +52,17 @@ export default function Enrollment() {
     //         alert('Get success')
     //     });
 
-    async function writeUserData(userId, email, password) {
-        const docRef = await addDoc(collection(db, "users"), {
-            email,
-            password
-        });
-    }
-    useEffect(() => {
-        (async () => {
-            await writeUserData("3", "k.m15@gmail.com", "1546")
-        })()
-    }, [])
+    // async function writeUserData(userId, email, password) {
+    //     const docRef = await addDoc(collection(db, "users"), {
+    //         email,
+    //         password
+    //     });
+    // }
+    // useEffect(() => {
+    //     (async () => {
+    //         await writeUserData("3", "email", "password")
+    //     })()
+    // }, [])
 
     return (
         <>
@@ -49,6 +73,7 @@ export default function Enrollment() {
                 {showSignIn && <SignInComponnent />}
                 {showSignUp && <SignUpComponnent />}
             </h2>
+
         </>
     )
 }

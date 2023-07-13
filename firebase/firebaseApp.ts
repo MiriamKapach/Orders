@@ -14,11 +14,11 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-function writeUserData(userId:any, email:any, password:any) {
+export async function writeUserData(userId:any, email:any, password:any) {
   // const userRef = firebase.firestore().collection("users").add()
   firebase.firestore().collection("users").doc(userId).set(({
     email,
     password,
   }))
 }
-writeUserData("3","k.m15@gmail.com","1546")
+// writeUserData("3","k.m15@gmail.com","1546")

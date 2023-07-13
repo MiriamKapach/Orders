@@ -39,5 +39,5 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ]
+, "firebase/checkUser.jsx"  ]
 }
