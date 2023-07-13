@@ -1,6 +1,6 @@
 // import { initializeApp } from "firebase/app";
 // import { getApps } from "firebase/app";
-import { getDatabase, ref, set } from 'firebase/database'
+// import { getDatabase, ref, set /} from 'firebase/database'
 import firebase from "firebase/compat/app";
 
 const firebaseConfig = {

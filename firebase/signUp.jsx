@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation'
 import check from './checkUser'
-import writeUserData from '../pages/index'
+// import writeUserData from '../pages/index'
 
 function Page() {
     const [email, setEmail] = useState('')

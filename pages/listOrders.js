@@ -1,5 +1,5 @@
 import ordersData from './DB.json'
-// import '@/app/global/css'
+
 import Link from 'next/link'
 
 export default function Home() {

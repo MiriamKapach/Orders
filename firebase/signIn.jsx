@@ -6,7 +6,7 @@ import check from './checkUser'
 function Page() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [showSignUp, setshowSignUp] = useState(false);
+    // const [showSignUp, setshowSignUp] = useState(false);
     const router = useRouter('')
     const handleForm = async (event) => {
         event.preventDefault()
