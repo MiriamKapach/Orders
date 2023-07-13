@@ -25,9 +25,8 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
-<<<<<<< HEAD
-=======
+
 .button:hover{
   background-color: aquamarine;
 }
->>>>>>> dev
+
