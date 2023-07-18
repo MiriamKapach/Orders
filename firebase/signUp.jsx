@@ -1,42 +1,74 @@
 'use client'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation'
-import check from './checkUser'
-// import writeUserData from '../pages/index'
+import { writeUserData } from '../pages/index'
+import { checkDataExistence } from './checkUser';
+import { getAuth, createUserWithEmailAndPassword} from "firebase/auth";
 
+  
 function Page() {
-    const [email, setEmail] = useState('')
+    const [emailToCheck, setEmailToCheck] = useState('')
     const [password, setPassword] = useState('')
     const router = useRouter()
-    const [users, setUsers] = useState([]);
+    const [userId, setUserId] = useState(() => {
+        const hasBeenReset = localStorage.getItem('hasBeenReset');
+        //     if (hasBeenReset) {
+        //         return 0; // Reset the count to 0
+        //     } else {
+        //         const storedUserId = localStorage.getItem('userId');
+        //         return storedUserId ? parseInt(storedUserId) : 0;
+        //     }
+        // });
+
+        const storeduserId = localStorage.getItem('userId');
+        return storeduserId ? parseInt(storeduserId) : 0;
+    });
+
+    
+    useEffect(() => {
+        localStorage.setItem('userId', userId.toString());
+    }, [userId])
     const handleForm = async (event) => {
-        let userId=0;
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+          });
         event.preventDefault()
         const { result, error } = await (email, password);
-        // if (error) {
-        //     return console.log(error)
-        // }
+        if (error) {
+            alert("error");
+        }
         const user = { email, password };
-        if (check(user)) {
+        const resultCheck = await checkDataExistence('users', 'email', emailToCheck);
+        alert(JSON.stringify(resultCheck));
+        if (resultCheck) {
             alert("exist! please sign in")
             window.location.reload();
         } else {
             alert("sucsses")
-            setUsers([...users,user]);
-            alert(JSON.stringify(users))
-            userId=userId+1;
-           // await writeUserData(userId,email,password);
+            setUserId((prevUserId) => prevUserId + 1);
+            alert(userId.toString())
+            // userId=0
+            writeUserData(userId.toString(), emailToCheck, password);
             return router.push("listOrders");
         }
-        
+
     }
-    return (<div className="wrapper">
-        <div className="form-wrapper">
+    return (<div className="wrapper" style={{ color: 'chocolate' }}>
+        <div className="form-wrapper" style={{ color: 'chocolate' }}>
             <h1 className="mt-60 mb-30">Sign up</h1>
             <form onSubmit={handleForm} className="form" >
                 <label htmlFor="email">
                     <p>Email</p>
-                    <input onChange={(e) => setEmail(e.target.value)} required type="email" name="email" id="email" placeholder="example@mail.com" />
+                    <input onChange={(e) => setEmailToCheck(e.target.value)} required type="email" name="email" id="email" placeholder="example@mail.com" />
                 </label>
                 <label htmlFor="password">
                     <p>Password</p>

@@ -1,18 +1,33 @@
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
 
-export default function check(user) {
-    let users = getUsers();
-    const existUser = users.find(u => u.email == user.email && u.password == user.password);
-    if (existUser != null) {
-        return true;
-    } else {
-        return false;
+const firebaseConfig = {
+    apiKey: "AIzaSyBI8uNmgtfKks8JR7EQznSiTIg2HBEPYXI",
+    authDomain: "orders-91025.firebaseapp.com",
+    projectId: "orders-91025",
+    storageBucket: "orders-91025.appspot.com",
+    messagingSenderId: "722773717214",
+    appId: "1:722773717214:web:0faa7d1a39192b3367d24f",
+    measurementId: "G-3N85XGDSCM"
+};
+const app = initializeApp(firebaseConfig);
+
+export const checkDataExistence = async (users, email, emailToCheck) => {
+    try {
+      const db = getFirestore(app);
+      const collectionRef = collection(db, users);
+      const q = query(collectionRef, where("email", "==", emailToCheck));
+      const docSnap = await getDocs(q);
+      let snapshotData;
+      if (!docSnap.empty) {
+        snapshotData = docSnap.docs[0].data();
+        console.log(snapshotData);
+      } else {
+        console.log('No matching documents found.');
+      }
+      return !docSnap.empty;
+    } catch (error) {
+      console.log(error);
+      return false;
     }
-}
-function getUsers() {
-    const users = [
-        { userId: "1234", email: "t41258@gmail.com", password: 2452 },
-        { userId: "863", email: "bbb@jdf", password: 895638 },
-        { userId: "653", email: "dee@jdf", password: 12345 }
-    ];
-    return users;
-}
+  };

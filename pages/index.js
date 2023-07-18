@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import SignInComponnent from "../firebase/signIn";
-import SignUpComponnent from '../firebase/signUp'
+import SignUpComponnent from '../firebase/signUp';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
-
-
+import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBI8uNmgtfKks8JR7EQznSiTIg2HBEPYXI",
@@ -19,61 +17,49 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// async function writeUserData(userId, email, password) {
-//     const docRef = await addDoc(collection(db, "users"), {
-//         email,
-//         password
-//     });
-//     alert("scsess writeUserData");
+export const writeUserData = async (userId, email, password) => {
+    const docRef = doc(db, "users", userId);
+    const data = {
+        email,
+        password
+    }
+    setDoc(docRef, data);
+};
+
+// export const retrieveData = async () => {
+//     const usersRef = db.collection('users').doc('SF');
+//     const doc = await usersRef.get();
+//     if (!doc.exists) {
+//         alert('No such document!');
+//     } else {
+//         alert('Document data:', doc.data());
+//     }
 // }
 
-export default function Enrollment() {
-    
+const Enrollment = () => {
+  
     const [showSignIn, setShowSignIn] = useState(false)
-    const [showSignUp, setshowSignUp] = useState(false)
-
-    // const writeUserData = async (userId, email, password) => {
-    //         await firebase.firestore().collection('users').doc(userId).set({
-    //         // await db.collection('users').doc(userId).set({
-    //             email,
-    //             password
-    //         });
-    //         alert("scsess writeUserData");
-    // };
-
-    // if(ShowSignIn.isAuthenticated()){
-    //     alert("Authenticated")
-    // }
-
-    // firebase.firestore().collection("users")
-    //     .doc(Fire.shared.userId)
-    //     .update({ Ticket: firebase.firestore.FieldValue.arrayUnion(userId) })
-    //     .then(() => {
-    //         alert('Get success')
-    //     });
-
-    // async function writeUserData(userId, email, password) {
-    //     const docRef = await addDoc(collection(db, "users"), {
-    //         email,
-    //         password
-    //     });
-    // }
-    // useEffect(() => {
-    //     (async () => {
-    //         await writeUserData("3", "email", "password")
-    //     })()
-    // }, [])
-
+    const [showSignUp, setshowSignUp] = useState(false);
     return (
         <>
-            <h1>Welcome to the orders site</h1>
-            <h2>
-                <button onClick={() => setShowSignIn(true)}>sign in</button>
-                <button onClick={() => setshowSignUp(true)}>sign up</button>
-                {showSignIn && <SignInComponnent />}
-                {showSignUp && <SignUpComponnent />}
-            </h2>
+            <div style={{
+                backgroundColor: 'beige',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+            }}>
 
+                <h1 style={{ color: 'chocolate' }}>Welcome to the orders site</h1>
+                <h2>
+                    <button style={{ backgroundColor: 'chocolate', color: 'white' }} onClick={() => setShowSignIn(true)}>sign in</button>
+                    <button style={{ backgroundColor: 'chocolate', color: 'beige' }} onClick={() => setshowSignUp(true)}>sign up</button>
+                    {showSignIn && <SignInComponnent />}
+                    {showSignUp && <SignUpComponnent />}
+
+                </h2>
+
+            </div>
         </>
-    )
+    );
 }
+
+export default Enrollment;
