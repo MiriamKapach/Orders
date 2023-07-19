@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { writeUserData } from '../pages/index'
 import { checkDataExistence } from './checkUser';
 import { getAuth, createUserWithEmailAndPassword} from "firebase/auth";
-
+// import Button from 'react-bootstrap/Button';
   
 function Page() {
     const [emailToCheck, setEmailToCheck] = useState('')
@@ -48,15 +48,12 @@ function Page() {
         }
         const user = { email, password };
         const resultCheck = await checkDataExistence('users', 'email', emailToCheck);
-        alert(JSON.stringify(resultCheck));
         if (resultCheck) {
             alert("exist! please sign in")
             window.location.reload();
         } else {
-            alert("sucsses")
+            alert("You have successfully registered!")
             setUserId((prevUserId) => prevUserId + 1);
-            alert(userId.toString())
-            // userId=0
             writeUserData(userId.toString(), emailToCheck, password);
             return router.push("listOrders");
         }

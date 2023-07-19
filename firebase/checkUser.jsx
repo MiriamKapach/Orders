@@ -31,3 +31,23 @@ export const checkDataExistence = async (users, email, emailToCheck) => {
       return false;
     }
   };
+
+  export const checkPassword = async (users,password,passwordToCheck) => {
+    try {
+      const db = getFirestore(app);
+      const collectionRef = collection(db, users);
+      const q = query(collectionRef, where("password", "==", passwordToCheck));
+      const docSnap = await getDocs(q);
+      let snapshotData;
+      if (!docSnap.empty) {
+        snapshotData = docSnap.docs[0].data();
+        console.log(snapshotData);
+      } else {
+        console.log('No matching documents found.');
+      }
+      return !docSnap.empty;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };

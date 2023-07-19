@@ -3,11 +3,12 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { checkDataExistence } from './checkUser';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { checkPassword } from './checkUser';
 
 
 function Page() {
     const [emailToCheck, setEmailToCheck] = useState('')
-    const [password, setPassword] = useState('')
+    const [passwordToCheck, setPasswordToCheck] = useState('')
     const router = useRouter('')
     const handleForm = async (event) => {
         event.preventDefault()
@@ -18,13 +19,16 @@ function Page() {
         // console.log(result)
         // const user = { email, password };
         const resultCheck = await checkDataExistence('users', 'email', emailToCheck);
-        alert(JSON.stringify(resultCheck));
+        const resultPass = await checkPassword('users', 'password',passwordToCheck)
+        // alert(JSON.stringify(resultCheck));
         if (resultCheck) {
-            alert("sucsses")
-            return router.push("listOrders")
+            if (resultPass) {
+                return router.push("listOrders")
+            } else {
+                alert("the password is wrong!")
+            }
         } else {
-            alert("not sucsses")
-            alert("sign up")
+            alert("You are not registered, please sign up")
             window.location.reload();
         }
         // const auth = getAuth();
@@ -50,7 +54,7 @@ function Page() {
                 </label>
                 <label htmlFor="password">
                     <p>Password</p>
-                    <input onChange={(ev) => setPassword(ev.target.value)} required type="password" name="password" id="password" placeholder="password" />
+                    <input onChange={(ev) => setPasswordToCheck(ev.target.value)} required type="password" name="password" id="password" placeholder="password" />
                 </label>
                 <button style={{ color: 'chocolate' }} type="submit">Sign In</button>
             </form>
