@@ -1,49 +1,70 @@
 'use client'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import check from './checkUser'
+import { checkDataExistence } from './checkUser';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { checkPassword } from './checkUser';
+// import Settings from '../pages/settings'
+import integrations from '../pages/settings'
+
 
 function Page() {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [emailToCheck, setEmailToCheck] = useState('')
+    const [passwordToCheck, setPasswordToCheck] = useState('')
     const router = useRouter('')
     const handleForm = async (event) => {
         event.preventDefault()
-        const { result, error } = await (email, password);
-        if (error) {
-            return console.log(error)
-        }
-        console.log(result)
-        if (!email, !password) {
-            alert("sign up")
+        // const { result, error } = await (emailToCheck, password);
+        // if (error) {
+        //     return console.log(error)
+        // }
+        // console.log(result)
+        // const user = { email, password };
+        const resultCheck = await checkDataExistence('users', 'email', emailToCheck);
+        const resultPass = await checkPassword('users', 'password',passwordToCheck)
+        // alert(JSON.stringify(resultCheck));
+        if (resultCheck) {
+            if (resultPass) {
+                // alert(integrations)
+                // alert(JSON.stringify(Settings))
+                // return router.push('/settings');
+                return router.push("listOrders")
+            } else {
+                alert("the password is wrong!")
+            }
         } else {
-            return router.push("listOrders")
+            alert("You are not registered, please sign up")
+            window.location.reload();
         }
+        // const auth = getAuth();
+        // signInWithEmailAndPassword(auth, email, password)
+        //     .then((userCredential) => {
+        //         // Signed in 
+        //         const user = userCredential.user;
+        //         // ...
+        //     })
+        //     .catch((error) => {
+        //         const errorCode = error.code;
+        //         const errorMessage = error.message;
+        //     });
+
     }
-    async function handelSignIn() {
-        let user = { email, password }
-        alert(email)
-        await check(user);
-    }
-    return (<div className="wrapper">
-        <div className="form-wrapper">
+    return (<div className="wrapper" style={{ color: 'chocolate' }}>
+        <div className="form-wrapper" style={{ color: 'chocolate' }}>
             <h1 className="mt-60 mb-30">Sign In</h1>
             <form onSubmit={handleForm} className="form">
                 <label htmlFor="email">
                     <p>Email</p>
-                    <input onChange={(e) => setEmail(e.target.value)} required type="email" name="email" id="email" placeholder="example@mail.com" />
+                    <input onChange={(ev) => setEmailToCheck(ev.target.value)} required type="email" name="email" id="email" placeholder="example@mail.com" />
                 </label>
                 <label htmlFor="password">
                     <p>Password</p>
-                    <input onChange={(e) => setPassword(e.target.value)} required type="password" name="password" id="password" placeholder="password" />
+                    <input onChange={(ev) => setPasswordToCheck(ev.target.value)} required type="password" name="password" id="password" placeholder="password" />
                 </label>
-                <button type="submit">Sign In</button>
+                <button style={{ color: 'chocolate' }} type="submit">Sign In</button>
             </form>
         </div>
-
     </div>
     );
 }
-
 export default Page;
-// onClick={handelSignIn()}

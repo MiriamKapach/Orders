@@ -1,9 +1,12 @@
-// import firebase from 'firebase/firestore'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import SignInComponnent from "../firebase/signIn";
-import SignUpComponnent from '../firebase/signUp'
+import SignUpComponnent from '../firebase/signUp';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc } from 'firebase/firestore/lite';
+import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore';
+import StylePage from './style'
+import Bubbles from './styleBasic';
+import Settings from './settings'
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyBI8uNmgtfKks8JR7EQznSiTIg2HBEPYXI",
@@ -13,42 +16,55 @@ const firebaseConfig = {
     messagingSenderId: "722773717214",
     appId: "1:722773717214:web:0faa7d1a39192b3367d24f",
     measurementId: "G-3N85XGDSCM"
+
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-export default function Enrollment() {
+
+export const writeUserData = async (userId, email, password) => {
+    const docRef = doc(db, "users", userId);
+    const data = {
+        email,
+        password
+    }
+    setDoc(docRef, data);
+};
+
+const Enrollment = () => {
 
     const [showSignIn, setShowSignIn] = useState(false)
-    const [showSignUp, setshowSignUp] = useState(false)
-    // firebase.firestore().collection("users")
-    //     .doc(Fire.shared.userId)
-    //     .update({ Ticket: firebase.firestore.FieldValue.arrayUnion(userId) })
-    //     .then(() => {
-    //         alert('Get success')
-    //     });
-
-    async function writeUserData(userId, email, password) {
-        const docRef = await addDoc(collection(db, "users"), {
-            email,
-            password
-        });
-    }
-    useEffect(() => {
-        (async () => {
-            await writeUserData("3", "k.m15@gmail.com", "1546")
-        })()
-    }, [])
-
+    const [showSignUp, setshowSignUp] = useState(false);
     return (
         <>
-            <h1>Welcome to the orders site</h1>
-            <h2>
-                <button onClick={() => setShowSignIn(true)}>sign in</button>
-                <button onClick={() => setshowSignUp(true)}>sign up</button>
-                {showSignIn && <SignInComponnent />}
-                {showSignUp && <SignUpComponnent />}
-            </h2>
+            {/* <Bubbles /> */}
+            <StylePage />
+            <div id="bubbles">
+                {/* style={{
+                backgroundColor: 'beige',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+            }}>  */}
+                <div id="bubbles2"> <div id="bubbles3">
+                    {/* <h1 style={{ color: 'chocolate' }}>Welcome to the orders site</h1> */}
+                    <h2>
+                        <button style={{ backgroundColor: 'chocolate', color: 'white' }} onClick={() => setShowSignIn(true)}>sign in</button>
+                        <button style={{ backgroundColor: 'chocolate', color: 'beige' }} onClick={() => setshowSignUp(true)}>sign up</button>
+
+                        {/* <button style={{ backgroundColor: 'chocolate', color: 'white' }} onClick={() => setShowSignIn(true)}>sign in</button>
+                        <button style={{ backgroundColor: 'chocolate', color: 'beige' }} onClick={() => setshowSignUp(true)}>sign up</button> */}
+                        {showSignIn && <SignInComponnent />}
+                        {showSignUp && <SignUpComponnent />}
+
+                    </h2>
+                </div>
+
+                </div>
+            </div>
+
         </>
-    )
+    );
 }
+
+
+export default Enrollment;

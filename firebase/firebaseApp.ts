@@ -1,6 +1,6 @@
 // import { initializeApp } from "firebase/app";
 // import { getApps } from "firebase/app";
-import { getDatabase, ref, set } from 'firebase/database'
+// import { getDatabase, ref, set /} from 'firebase/database'
 import firebase from "firebase/compat/app";
 
 const firebaseConfig = {
@@ -14,11 +14,32 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-function writeUserData(userId:any, email:any, password:any) {
+export async function writeUserData(userId:any, email:any, password:any) {
   // const userRef = firebase.firestore().collection("users").add()
+  // alert(JSON.stringify(userId))
   firebase.firestore().collection("users").doc(userId).set(({
     email,
     password,
   }))
 }
-writeUserData("3","k.m15@gmail.com","1546")
+
+
+export const db = firebase.firestore();
+
+// const getDataFromCollection = async () => {
+//   try {
+//     const collectionRef = db.collection('users');
+//     const snapshot = await collectionRef.get();
+//     const data = [];
+//     snapshot.forEach((doc) => {
+//       const docData = doc.data();
+//       data.push(docData);
+//     });
+
+//     console.log(data); // Process or display the extracted data
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+// getDataFromCollection();
