@@ -5,6 +5,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc, setDoc, doc } from 'firebase/firestore';
 import StylePage from './style'
 import Bubbles from './styleBasic';
+import Settings from './settings'
 
 
 const firebaseConfig = {

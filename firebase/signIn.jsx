@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation'
 import { checkDataExistence } from './checkUser';
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { checkPassword } from './checkUser';
+// import Settings from '../pages/settings'
+import integrations from '../pages/settings'
 
 
 function Page() {
@@ -23,6 +25,9 @@ function Page() {
         // alert(JSON.stringify(resultCheck));
         if (resultCheck) {
             if (resultPass) {
+                // alert(integrations)
+                // alert(JSON.stringify(Settings))
+                // return router.push('/settings');
                 return router.push("listOrders")
             } else {
                 alert("the password is wrong!")

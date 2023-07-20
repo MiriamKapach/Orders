@@ -1,0 +1,9 @@
+.data_table{
+    margin: 0;
+    padding: 0;
+    background-color: beige;
+    /* font-style: oblique; */
+    font-size: medium;
+    /* display: table-column; */
+  }
+  
